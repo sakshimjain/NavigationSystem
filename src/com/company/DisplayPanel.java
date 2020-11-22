@@ -15,7 +15,7 @@ public class DisplayPanel extends JFrame {
 
         JPanel frame1 = new JPanel();
         JPanel time = new JPanel();
-        JPanel sensors = new JPanel(new GridLayout(2, 2, 4, 4));
+        JPanel sensors = new JPanel(new GridLayout(3, 2, 4, 4));
 
         JButton start = new JButton("Start");
         frame1.add(start);
@@ -65,7 +65,7 @@ public class DisplayPanel extends JFrame {
         yawRate_value.setText("0 °/s");
         sensors.add(yawRate_value);
 
-        JLabel latAcceleration = new JLabel("Acceleration: ");
+        JLabel latAcceleration = new JLabel("Lateral Acceleration: ");
         latAcceleration.setForeground(Color.WHITE);
         sensors.add(latAcceleration);
         latAcceleration.setSize(100, 50);
@@ -73,6 +73,24 @@ public class DisplayPanel extends JFrame {
         latAcceleration_value.setForeground(Color.WHITE);
         latAcceleration_value.setText("0 m/s²");
         sensors.add(latAcceleration_value);
+        
+        JLabel longAcceleration = new JLabel("Longitudinal Acceleration: ");
+        longAcceleration.setForeground(Color.WHITE);
+        sensors.add(longAcceleration);
+        longAcceleration.setSize(100, 50);
+        JLabel longAcceleration_value = new JLabel();
+        longAcceleration_value.setForeground(Color.WHITE);
+        longAcceleration_value.setText("0 m/s²");
+        sensors.add(longAcceleration_value);
+        
+        JLabel gps = new JLabel("GPS Coordinates: ");
+        gps.setForeground(Color.WHITE);
+        sensors.add(gps);
+        gps.setSize(100, 50);
+        JLabel gps_value = new JLabel();
+        gps_value.setForeground(Color.WHITE);
+        gps_value.setText("0");
+        sensors.add(gps_value);
 
         sensors.setBackground(Color.BLACK);
 
