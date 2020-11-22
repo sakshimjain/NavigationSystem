@@ -1,8 +1,12 @@
 package com.company;
 
 import javax.swing.*;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class DisplayPanel extends JFrame {
 
@@ -97,36 +101,39 @@ public class DisplayPanel extends JFrame {
         frame2.add(frame1, BorderLayout.NORTH);
         frame2.add(time, BorderLayout.SOUTH);
         frame2.add(sensors, BorderLayout.CENTER);
-        frame2.setSize(500, 500);
+        frame2.setSize(700, 500);
         frame2.setVisible(true);
-
-        for (CarAttributes attribute : attributesArrayList) {
-
-			switch (attribute.getSensorName()) {
-				case "lateral acceleration(metres/s^2)" -> {
-					latAcceleration_value.setText(attribute.getValue());
-					time_value.setText(Double.toString(attribute.getTimeOffset()));
-				}
-				case "Yaw rate(degrees/second)" -> {
-					yawRate_value.setText(attribute.getValue());
-					time_value.setText(Double.toString(attribute.getTimeOffset()));
-				}
-				case "Steering wheel angle(degrees)" -> {
-					steerAngle_value.setText(attribute.getValue());
-					time_value.setText(Double.toString(attribute.getTimeOffset()));
-				}
-				case "Vehicle Speed(km/h)" -> {
-					vehicleSpeed_value.setText(attribute.getValue());
-					time_value.setText(Double.toString(attribute.getTimeOffset()));
-				}
-			}
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException interruptedException) {
-                interruptedException.printStackTrace();
-            }
-            System.out.format("%16s%40s%25s", attribute.getTimeOffset(), attribute.getSensorName(), attribute.getValue());
-            System.out.println();
-        }
+        start.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        	for (CarAttributes attribute : attributesArrayList) {
+	        		
+	    			switch (attribute.getSensorName()) {
+	    				case "lateral acceleration(metres/s^2)" -> {
+	    					latAcceleration_value.setText(attribute.getValue());
+	    					time_value.setText(Double.toString(attribute.getTimeOffset()));
+	    				}
+	    				case "Yaw rate(degrees/second)" -> {
+	    					yawRate_value.setText(attribute.getValue());
+	    					time_value.setText(Double.toString(attribute.getTimeOffset()));
+	    				}
+	    				case "Steering wheel angle(degrees)" -> {
+	    					steerAngle_value.setText(attribute.getValue());
+	    					time_value.setText(Double.toString(attribute.getTimeOffset()));
+	    				}
+	    				case "Vehicle Speed(km/h)" -> {
+	    					vehicleSpeed_value.setText(attribute.getValue());
+	    					time_value.setText(Double.toString(attribute.getTimeOffset()));
+	    				}
+	    			}
+	                try {
+	                    Thread.sleep(1000);
+	                } catch (InterruptedException interruptedException) {
+	                    interruptedException.printStackTrace();
+	                }
+	                System.out.format("%16s%40s%25s", attribute.getTimeOffset(), attribute.getSensorName(), attribute.getValue());
+	                System.out.println();
+	            }
+	        }
+	    });
     }
 }
