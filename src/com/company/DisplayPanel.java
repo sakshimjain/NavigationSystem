@@ -1,90 +1,114 @@
 package com.company;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class DisplayPanel extends JFrame {
 
     public void display(ArrayList<CarAttributes> attributesArrayList) {
-        setSize(500,500);
+        setSize(500, 500);
         setVisible(false);
-        
-	    JFrame frame2 = new JFrame("NAVIGATION SYSTEM");
-	    frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    
-	    JPanel frame1 = new JPanel();
-	    JPanel time = new JPanel();
-	    JPanel sensors = new JPanel(new GridLayout(2,2,4,4));
 
-	    JButton start = new JButton("Start Demo");
-	    frame1.add(start);
-	    frame1.setBackground(Color.BLACK);
-	    
-	    JLabel timeLabel = new JLabel("Current Time: ");
-	    timeLabel.setFont(new Font("Serif", Font.BOLD, 20));
-	    timeLabel.setForeground(Color.WHITE);
-	    time.add(timeLabel);
-	    timeLabel.setSize(100, 50);
-	    JLabel time_value = new JLabel();
-	    time_value.setForeground(Color.WHITE);
-	    time_value.setFont(new Font("Serif", Font.BOLD, 20));
-	    time_value.setText("0.00 s");
-	    time.add(time_value);
-	    time_value.setSize(100, 50);
-	    time.setBackground(Color.BLACK);
+        JFrame frame2 = new JFrame("NAVIGATION SYSTEM");
+        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	    timeLabel.setHorizontalAlignment(JLabel.CENTER);
-	    timeLabel.setVerticalAlignment(JLabel.CENTER);
-	    
-	    
-	    JLabel vehicleSpeed = new JLabel("Vehicle Speed: ");
-	    vehicleSpeed.setForeground(Color.WHITE);
-	    sensors.add(vehicleSpeed);
-	    vehicleSpeed.setSize(100, 50);
-	    JLabel vehicleSpeed_value = new JLabel();
-	    vehicleSpeed_value.setForeground(Color.WHITE);
-	    vehicleSpeed_value.setText("0.00 mph");
-	    sensors.add(vehicleSpeed_value);
-	    
-	    JLabel steerAngle = new JLabel("Steering Angle: ");
-	    steerAngle.setForeground(Color.WHITE);
-	    sensors.add(steerAngle);
-	    steerAngle.setSize(100, 50);
-	    JLabel steerAngle_value = new JLabel();
-	    steerAngle_value.setForeground(Color.WHITE);
-	    steerAngle_value.setText("0°");
-	    sensors.add(steerAngle_value);
-	    
-	    JLabel yawRate = new JLabel("Yaw Rate: ");
-	    yawRate.setForeground(Color.WHITE);
-	    sensors.add(yawRate);
-	    yawRate.setSize(100, 50);
-	    JLabel yawRate_value = new JLabel();
-	    yawRate_value.setForeground(Color.WHITE);
-	    yawRate_value.setText("0 °/s");
-	    sensors.add(yawRate_value);
-	    
-	    JLabel latAcceleration = new JLabel("Acceleration: ");
-	    latAcceleration.setForeground(Color.WHITE);
-	    sensors.add(latAcceleration);
-	    latAcceleration.setSize(100, 50);
-	    JLabel latAcceleration_value = new JLabel();
-	    latAcceleration_value.setForeground(Color.WHITE);
-	    latAcceleration_value.setText("0 m/s²");
-	    sensors.add(latAcceleration_value);
-	    
-	    sensors.setBackground(Color.BLACK);
+        JPanel frame1 = new JPanel();
+        JPanel time = new JPanel();
+        JPanel sensors = new JPanel(new GridLayout(2, 2, 4, 4));
 
-	    frame2.add(frame1, BorderLayout.NORTH);
-	    frame2.add(time, BorderLayout.SOUTH);
-	    frame2.add(sensors, BorderLayout.CENTER);
-    	frame2.setSize(500, 500);
-    	frame2.setVisible(true);
+        JButton start = new JButton("Start");
+        frame1.add(start);
+        frame1.setBackground(Color.BLACK);
+
+        JLabel timeLabel = new JLabel("Current Time: ");
+        timeLabel.setFont(new Font("Serif", Font.BOLD, 20));
+        timeLabel.setForeground(Color.WHITE);
+        time.add(timeLabel);
+        timeLabel.setSize(100, 50);
+        JLabel time_value = new JLabel();
+        time_value.setForeground(Color.WHITE);
+        time_value.setFont(new Font("Serif", Font.BOLD, 20));
+        time_value.setText("0.00 s");
+        time.add(time_value);
+        time_value.setSize(100, 50);
+        time.setBackground(Color.BLACK);
+
+        timeLabel.setHorizontalAlignment(JLabel.CENTER);
+        timeLabel.setVerticalAlignment(JLabel.CENTER);
+
+
+        JLabel vehicleSpeed = new JLabel("Vehicle Speed: ");
+        vehicleSpeed.setForeground(Color.WHITE);
+        sensors.add(vehicleSpeed);
+        vehicleSpeed.setSize(100, 50);
+        JLabel vehicleSpeed_value = new JLabel();
+        vehicleSpeed_value.setForeground(Color.WHITE);
+        vehicleSpeed_value.setText("0.00 mph");
+        sensors.add(vehicleSpeed_value);
+
+        JLabel steerAngle = new JLabel("Steering Angle: ");
+        steerAngle.setForeground(Color.WHITE);
+        sensors.add(steerAngle);
+        steerAngle.setSize(100, 50);
+        JLabel steerAngle_value = new JLabel();
+        steerAngle_value.setForeground(Color.WHITE);
+        steerAngle_value.setText("0°");
+        sensors.add(steerAngle_value);
+
+        JLabel yawRate = new JLabel("Yaw Rate: ");
+        yawRate.setForeground(Color.WHITE);
+        sensors.add(yawRate);
+        yawRate.setSize(100, 50);
+        JLabel yawRate_value = new JLabel();
+        yawRate_value.setForeground(Color.WHITE);
+        yawRate_value.setText("0 °/s");
+        sensors.add(yawRate_value);
+
+        JLabel latAcceleration = new JLabel("Acceleration: ");
+        latAcceleration.setForeground(Color.WHITE);
+        sensors.add(latAcceleration);
+        latAcceleration.setSize(100, 50);
+        JLabel latAcceleration_value = new JLabel();
+        latAcceleration_value.setForeground(Color.WHITE);
+        latAcceleration_value.setText("0 m/s²");
+        sensors.add(latAcceleration_value);
+
+        sensors.setBackground(Color.BLACK);
+
+        frame2.add(frame1, BorderLayout.NORTH);
+        frame2.add(time, BorderLayout.SOUTH);
+        frame2.add(sensors, BorderLayout.CENTER);
+        frame2.setSize(500, 500);
+        frame2.setVisible(true);
+
+        for (CarAttributes attribute : attributesArrayList) {
+
+			switch (attribute.getSensorName()) {
+				case "lateral acceleration(metres/s^2)" -> {
+					latAcceleration_value.setText(attribute.getValue());
+					time_value.setText(Double.toString(attribute.getTimeOffset()));
+				}
+				case "Yaw rate(degrees/second)" -> {
+					yawRate_value.setText(attribute.getValue());
+					time_value.setText(Double.toString(attribute.getTimeOffset()));
+				}
+				case "Steering wheel angle(degrees)" -> {
+					steerAngle_value.setText(attribute.getValue());
+					time_value.setText(Double.toString(attribute.getTimeOffset()));
+				}
+				case "Vehicle Speed(km/h)" -> {
+					vehicleSpeed_value.setText(attribute.getValue());
+					time_value.setText(Double.toString(attribute.getTimeOffset()));
+				}
+			}
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+            System.out.format("%16s%40s%25s", attribute.getTimeOffset(), attribute.getSensorName(), attribute.getValue());
+            System.out.println();
+        }
     }
 }
