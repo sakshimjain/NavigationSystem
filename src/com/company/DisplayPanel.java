@@ -17,7 +17,7 @@ public class DisplayPanel extends JFrame {
 
         JPanel frame1 = new JPanel();
         JPanel time = new JPanel();
-        JPanel sensors = new JPanel(new GridLayout(3, 2, 4, 4));
+        JPanel sensors = new JPanel(new GridLayout(4, 2, 2, 2));
 
         JButton start = new JButton("Start");
         frame1.add(start);
@@ -40,6 +40,23 @@ public class DisplayPanel extends JFrame {
         timeLabel.setHorizontalAlignment(JLabel.CENTER);
         timeLabel.setVerticalAlignment(JLabel.CENTER);
 
+        JLabel curveDetection = new JLabel("Curve Detection: ");
+        curveDetection.setForeground(Color.WHITE);
+        sensors.add(curveDetection);
+        curveDetection.setSize(100, 50);
+        JLabel curveDetection_value = new JLabel();
+        curveDetection_value.setForeground(Color.WHITE);
+        curveDetection_value.setText("No curve");
+        sensors.add(curveDetection_value);
+
+        JLabel curvePosition = new JLabel("Curve Position: ");
+        curvePosition.setForeground(Color.WHITE);
+        sensors.add(curvePosition);
+        curvePosition.setSize(100, 50);
+        JLabel curvePosition_value = new JLabel();
+        curvePosition_value.setForeground(Color.WHITE);
+        curvePosition_value.setText("0");
+        sensors.add(curvePosition_value);
 
         JLabel vehicleSpeed = new JLabel("Vehicle Speed: ");
         vehicleSpeed.setForeground(Color.WHITE);
@@ -164,7 +181,7 @@ public class DisplayPanel extends JFrame {
                         }
                     }
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
