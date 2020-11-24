@@ -139,14 +139,6 @@ public class Main {
         Collections.sort(attributeCollectionList, new CustomComparator());
 
         displayPanel.display(attributeCollectionList);
-//        System.out.format("%16s%40s%25s", "Time Offset", "Sensor Name", "Value");
-//        System.out.println();
-//
-//        //Printing out the values of collection and formatting
-//        for (CarAttributes attributes : attributeCollectionList) {
-//            System.out.format("%16s%40s%25s", attributes.getTimeOffset(), attributes.getSensorName(), attributes.getValue());
-//            System.out.println();
-//        }
     }
 
 

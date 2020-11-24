@@ -23,7 +23,7 @@ public class DisplayPanel extends JFrame {
         JPanel dashboard = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel curve = new JPanel(new GridLayout(2, 2, 2, 2));
         JPanel sensors = new JPanel(new GridLayout(3, 2, 2, 2));
-        curve.setPreferredSize(new Dimension(700, 100));
+        curve.setPreferredSize(new Dimension(900, 100));
         sensors.setPreferredSize(new Dimension(700, 290));
 
         JButton start = new JButton("Start");
@@ -71,7 +71,7 @@ public class DisplayPanel extends JFrame {
         avgSpeedLabel.setSize(100, 50);
         JLabel avgSpeed_value = new JLabel();
         avgSpeed_value.setForeground(Color.WHITE);
-        avgSpeed_value.setText("0");
+        avgSpeed_value.setText("0 km/h");
         curve.add(avgSpeed_value);
 
         JLabel empty = new JLabel();
@@ -167,7 +167,7 @@ public class DisplayPanel extends JFrame {
         frame2.add(frame1, BorderLayout.NORTH);
         frame2.add(time, BorderLayout.SOUTH);
         frame2.add(dashboard, BorderLayout.CENTER);
-        frame2.setSize(800, 500);
+        frame2.setSize(1000, 500);
         frame2.setVisible(true);
         System.out.println("\t\tTime \t SteerAngle \t LatAcceleration \t LongAcceleration \t\t\t GPS \t\t\t YawRate \t VehSpeed");
         CurveDetails curveDetails = new CurveDetails();
@@ -193,6 +193,9 @@ public class DisplayPanel extends JFrame {
                 String direction = "";
                 String position = "";
                 boolean flag1 = true;
+                double lowSpeed = 0.00;
+                double highSpeed = 0.00;
+
                 for (CarAttributes attribute : attributesArrayList) {
 
                     switch (attribute.getSensorName()) {
@@ -238,7 +241,7 @@ public class DisplayPanel extends JFrame {
                         }
                     }
                     try {
-                        Thread.sleep(1);
+                        Thread.sleep(3);
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
@@ -252,13 +255,15 @@ public class DisplayPanel extends JFrame {
                             curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
                             flag1 = false;
                         }
-
-
+                        lowSpeed = Math.min(lowSpeed, speed);
+                        highSpeed = Math.max(highSpeed, speed);
                         if (speed < 50) curveDetails.speedWarning = "Low Speed";
-                        if (speed > 100) curveDetails.speedWarning = "High Speed";
+                        if (speed > 50) curveDetails.speedWarning = "High Speed";
                     } else {
                         if (curveDetails.startPoint != null && !flag1) {
                             curveDetails.endPoint = position;
+                            curveDetails.avgSpeed = (lowSpeed + highSpeed)/2;
+                            avgSpeed_value.setText((curveDetails.avgSpeed) + " km/h");
                             curveList.add(curveDetails);
                             curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
                             curveDetails.startPoint = null;
