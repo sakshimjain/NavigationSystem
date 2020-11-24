@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static java.lang.StrictMath.abs;
+
 public class DisplayPanel extends JFrame {
 
     public void display(ArrayList<CarAttributes> attributesArrayList) {
@@ -18,11 +20,11 @@ public class DisplayPanel extends JFrame {
 
         JPanel frame1 = new JPanel();
         JPanel time = new JPanel();
-        JPanel dashboard = new JPanel( new FlowLayout(FlowLayout.CENTER, 0, 0) );
+        JPanel dashboard = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel curve = new JPanel(new GridLayout(1, 2, 2, 2));
         JPanel sensors = new JPanel(new GridLayout(3, 2, 2, 2));
-        curve.setPreferredSize( new Dimension(700, 100) );
-        sensors.setPreferredSize( new Dimension(700, 290) );
+        curve.setPreferredSize(new Dimension(700, 100));
+        sensors.setPreferredSize(new Dimension(700, 290));
 
         JButton start = new JButton("Start");
         frame1.add(start);
@@ -132,7 +134,7 @@ public class DisplayPanel extends JFrame {
                         BorderFactory.createEtchedBorder(
                                 EtchedBorder.RAISED, Color.GRAY
                                 , Color.DARK_GRAY), "Sensor Data"));
-        ((javax.swing.border.TitledBorder)sensors.getBorder()).setTitleColor(Color.WHITE);
+        ((javax.swing.border.TitledBorder) sensors.getBorder()).setTitleColor(Color.WHITE);
 
         curve.setBackground(Color.BLACK);
         curve.setBorder(
@@ -140,7 +142,7 @@ public class DisplayPanel extends JFrame {
                         BorderFactory.createEtchedBorder(
                                 EtchedBorder.RAISED, Color.GRAY
                                 , Color.DARK_GRAY), "Curve"));
-        ((javax.swing.border.TitledBorder)curve.getBorder()).setTitleColor(Color.WHITE);
+        ((javax.swing.border.TitledBorder) curve.getBorder()).setTitleColor(Color.WHITE);
 
         dashboard.add(curve, BorderLayout.NORTH);
         dashboard.add(sensors, BorderLayout.SOUTH);
@@ -224,16 +226,13 @@ public class DisplayPanel extends JFrame {
                     }
 
                     curveDetails.speedWarning = "Low speed";
-                    if (steeringAngle > 1000) {
-                        if (yawRate2 > 0) {
-                            curveDetails.direction = "Left Curve";
-                            if (flag1) {
-                                curveDetails.startPoint = position;
-                                curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
-                                flag1 = false;
-                            }
-                        } else {
-                            curveDetails.direction = "No curve";
+                    if (abs(steeringAngle) > 10) {
+                        if (steeringAngle < 0) curveDetails.direction = "Left Curve";
+                        if (steeringAngle > 0) curveDetails.direction = "Right Curve";
+                        if (flag1) {
+                            curveDetails.startPoint = position;
+                            curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
+                            flag1 = false;
                         }
 
 
@@ -244,6 +243,7 @@ public class DisplayPanel extends JFrame {
                             curveDetails.endPoint = position;
                             curveList.add(curveDetails);
                             curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
+                            curveDetails.startPoint = null;
                         }
                         curveDetails.direction = "No curve";
                         flag1 = true;
