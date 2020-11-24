@@ -21,7 +21,7 @@ public class DisplayPanel extends JFrame {
         JPanel frame1 = new JPanel();
         JPanel time = new JPanel();
         JPanel dashboard = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        JPanel curve = new JPanel(new GridLayout(1, 2, 2, 2));
+        JPanel curve = new JPanel(new GridLayout(2, 2, 2, 2));
         JPanel sensors = new JPanel(new GridLayout(3, 2, 2, 2));
         curve.setPreferredSize(new Dimension(700, 100));
         sensors.setPreferredSize(new Dimension(700, 290));
@@ -64,6 +64,23 @@ public class DisplayPanel extends JFrame {
         curvePosition_value.setForeground(Color.WHITE);
         curvePosition_value.setText("0");
         curve.add(curvePosition_value);
+
+        JLabel avgSpeedLabel = new JLabel("Avg Speed: ");
+        avgSpeedLabel.setForeground(Color.WHITE);
+        curve.add(avgSpeedLabel);
+        avgSpeedLabel.setSize(100, 50);
+        JLabel avgSpeed_value = new JLabel();
+        avgSpeed_value.setForeground(Color.WHITE);
+        avgSpeed_value.setText("0");
+        curve.add(avgSpeed_value);
+
+        JLabel empty = new JLabel();
+        empty.setForeground(Color.WHITE);
+        curve.add(empty);
+        avgSpeedLabel.setSize(100, 50);
+        JLabel empty_value = new JLabel();
+        empty_value.setForeground(Color.WHITE);
+        curve.add(empty_value);
 
         JLabel vehicleSpeed = new JLabel("Vehicle Speed: ");
         vehicleSpeed.setForeground(Color.WHITE);
@@ -144,12 +161,13 @@ public class DisplayPanel extends JFrame {
                                 , Color.DARK_GRAY), "Curve"));
         ((javax.swing.border.TitledBorder) curve.getBorder()).setTitleColor(Color.WHITE);
 
+        dashboard.setBackground(Color.BLACK);
         dashboard.add(curve, BorderLayout.NORTH);
         dashboard.add(sensors, BorderLayout.SOUTH);
         frame2.add(frame1, BorderLayout.NORTH);
         frame2.add(time, BorderLayout.SOUTH);
         frame2.add(dashboard, BorderLayout.CENTER);
-        frame2.setSize(700, 500);
+        frame2.setSize(800, 500);
         frame2.setVisible(true);
         System.out.println("\t\tTime \t SteerAngle \t LatAcceleration \t LongAcceleration \t\t\t GPS \t\t\t YawRate \t VehSpeed");
         CurveDetails curveDetails = new CurveDetails();
@@ -250,9 +268,6 @@ public class DisplayPanel extends JFrame {
                     }
 
                     curveDetection_value.setText(curveDetails.direction + " with " + curveDetails.speedWarning);
-//                    Double ratio = Double.parseDouble(vehicleSpeedConsole) / Double.parseDouble(yawRateConsole);
-//                    String ratio_console = Double.toString(ratio);
-//                    System.out.println(timeValue + " " + steerAngleConsole + " " + latAccelerationConsole + " " + longitudinalAcceleration + " " + gpsValues + " " + yawRateConsole + " " + vehicleSpeedConsole + " " + ratio_console);
                     System.out.format("\r\t\t%s\t%10s\t\t%10s\t\t%20s\t%20s\t%10s\t\t%5s", timeValue, steerAngleConsole, latAccelerationConsole, longitudinalAcceleration, gpsValues, yawRateConsole, vehicleSpeedConsole);
                     flag[0] = false;
                 }
