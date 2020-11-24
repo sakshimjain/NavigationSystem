@@ -116,7 +116,7 @@ public class DecodeValue {
 
             //decoding value for Steering Wheel
             if (attribute.getFrameID().equals("0003")) {
-                double value = calculateValuesForSteeringWheelAngle(canData);
+                double value = calculateValuesForSteeringWheelAngle(binaryCanData);
                 attribute.setValue(String.valueOf(df.format(value)));
 
             }

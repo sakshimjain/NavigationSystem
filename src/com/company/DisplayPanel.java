@@ -152,6 +152,7 @@ public class DisplayPanel extends JFrame {
         System.out.println("\t\tTime \t SteerAngle \t LatAcceleration \t LongAcceleration \t\t\t GPS \t\t\t YawRate \t VehSpeed");
         CurveDetails curveDetails = new CurveDetails();
         CurveDetails curveDetails1 = new CurveDetails();
+        ArrayList<CurveDetails> curveList = new ArrayList<>();
 
         final boolean[] flag = {false};
 
@@ -231,13 +232,19 @@ public class DisplayPanel extends JFrame {
                                 curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
                                 flag1 = false;
                             }
+                        } else {
+                            curveDetails.direction = "No curve";
                         }
+
 
                         if (speed < 50) curveDetails.speedWarning = "Low Speed";
                         if (speed > 100) curveDetails.speedWarning = "High Speed";
                     } else {
-                        if (curveDetails.startPoint != null) curveDetails.endPoint = position;
-                        curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
+                        if (curveDetails.startPoint != null && !flag1) {
+                            curveDetails.endPoint = position;
+                            curveList.add(curveDetails);
+                            curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
+                        }
                         curveDetails.direction = "No curve";
                         flag1 = true;
                     }
@@ -249,6 +256,9 @@ public class DisplayPanel extends JFrame {
                     System.out.format("\r\t\t%s\t%10s\t\t%10s\t\t%20s\t%20s\t%10s\t\t%5s", timeValue, steerAngleConsole, latAccelerationConsole, longitudinalAcceleration, gpsValues, yawRateConsole, vehicleSpeedConsole);
                     flag[0] = false;
                 }
+
+                System.out.println();
+                System.out.println(curveList.size());
             }
         }
     }
