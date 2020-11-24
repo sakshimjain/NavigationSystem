@@ -22,9 +22,11 @@ public class DisplayPanel extends JFrame {
         JPanel time = new JPanel();
         JPanel dashboard = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel curve = new JPanel(new GridLayout(2, 2, 2, 2));
+        JPanel warning = new JPanel(new GridLayout(1, 3, 2, 2));
         JPanel sensors = new JPanel(new GridLayout(3, 2, 2, 2));
         curve.setPreferredSize(new Dimension(900, 100));
-        sensors.setPreferredSize(new Dimension(700, 290));
+        warning.setPreferredSize(new Dimension(900, 100));
+        sensors.setPreferredSize(new Dimension(700, 190));
 
         JButton start = new JButton("Start");
         frame1.add(start);
@@ -81,6 +83,42 @@ public class DisplayPanel extends JFrame {
         JLabel empty_value = new JLabel();
         empty_value.setForeground(Color.WHITE);
         curve.add(empty_value);
+
+        JLabel warningMsg = new JLabel("Warning: ");
+        warningMsg.setFont(new Font("Serif", Font.BOLD, 20));
+        warningMsg.setForeground(Color.RED);
+        warning.add(warningMsg);
+        warningMsg.setSize(100, 50);
+        JLabel warningMsg_value = new JLabel();
+        warningMsg_value.setFont(new Font("Serif", Font.BOLD, 20));
+        warningMsg_value.setForeground(Color.RED);
+        warningMsg_value.setText("--");
+        warningMsg_value.setSize(100, 50);
+        warning.add(warningMsg_value);
+
+        JLabel warningAvgSpeed = new JLabel("Avg Speed: ");
+        warningAvgSpeed.setFont(new Font("Serif", Font.BOLD, 20));
+        warningAvgSpeed.setForeground(Color.RED);
+        warning.add(warningAvgSpeed);
+        warningAvgSpeed.setSize(100, 50);
+        JLabel warningAvgSpeed_value = new JLabel();
+        warningAvgSpeed_value.setFont(new Font("Serif", Font.BOLD, 20));
+        warningAvgSpeed_value.setForeground(Color.RED);
+        warningAvgSpeed_value.setText("-- km/h");
+        warningAvgSpeed_value.setSize(100, 50);
+        warning.add(warningAvgSpeed_value);
+
+        JLabel distance = new JLabel("Distance: ");
+        distance.setFont(new Font("Serif", Font.BOLD, 20));
+        distance.setForeground(Color.RED);
+        warning.add(distance);
+        distance.setSize(100, 50);
+        JLabel distance_value = new JLabel();
+        distance_value.setFont(new Font("Serif", Font.BOLD, 20));
+        distance_value.setForeground(Color.RED);
+        distance_value.setText("-- km");
+        distance_value.setSize(100, 50);
+        warning.add(distance_value);
 
         JLabel vehicleSpeed = new JLabel("Vehicle Speed: ");
         vehicleSpeed.setForeground(Color.WHITE);
@@ -149,21 +187,30 @@ public class DisplayPanel extends JFrame {
         sensors.setBorder(
                 BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(
-                                EtchedBorder.RAISED, Color.GRAY
+                                EtchedBorder.RAISED, Color.WHITE
                                 , Color.DARK_GRAY), "Sensor Data"));
         ((javax.swing.border.TitledBorder) sensors.getBorder()).setTitleColor(Color.WHITE);
+
+        warning.setBackground(Color.BLACK);
+        warning.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(
+                                EtchedBorder.RAISED, Color.RED
+                                , Color.DARK_GRAY), "Warning"));
+        ((javax.swing.border.TitledBorder) warning.getBorder()).setTitleColor(Color.RED);
 
         curve.setBackground(Color.BLACK);
         curve.setBorder(
                 BorderFactory.createTitledBorder(
                         BorderFactory.createEtchedBorder(
-                                EtchedBorder.RAISED, Color.GRAY
+                                EtchedBorder.RAISED, Color.WHITE
                                 , Color.DARK_GRAY), "Curve"));
         ((javax.swing.border.TitledBorder) curve.getBorder()).setTitleColor(Color.WHITE);
 
         dashboard.setBackground(Color.BLACK);
-        dashboard.add(curve, BorderLayout.NORTH);
-        dashboard.add(sensors, BorderLayout.SOUTH);
+        dashboard.add(warning);
+        dashboard.add(curve);
+        dashboard.add(sensors);
         frame2.add(frame1, BorderLayout.NORTH);
         frame2.add(time, BorderLayout.SOUTH);
         frame2.add(dashboard, BorderLayout.CENTER);
@@ -280,6 +327,7 @@ public class DisplayPanel extends JFrame {
                 System.out.println();
                 System.out.println(curveList.size());
             }
+
         }
     }
 }
