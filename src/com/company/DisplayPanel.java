@@ -22,7 +22,7 @@ public class DisplayPanel extends JFrame {
         JPanel time = new JPanel();
         JPanel dashboard = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel curve = new JPanel(new GridLayout(2, 2, 2, 2));
-        JPanel warning = new JPanel(new GridLayout(1, 3, 2, 2));
+        JPanel warning = new JPanel(new GridLayout(1, 2, 2, 2));
         JPanel sensors = new JPanel(new GridLayout(3, 2, 2, 2));
         curve.setPreferredSize(new Dimension(900, 100));
         warning.setPreferredSize(new Dimension(900, 100));
@@ -107,18 +107,6 @@ public class DisplayPanel extends JFrame {
         warningAvgSpeed_value.setText("-- km/h");
         warningAvgSpeed_value.setSize(100, 50);
         warning.add(warningAvgSpeed_value);
-
-        JLabel distance = new JLabel("Distance: ");
-        distance.setFont(new Font("Serif", Font.BOLD, 20));
-        distance.setForeground(Color.RED);
-        warning.add(distance);
-        distance.setSize(100, 50);
-        JLabel distance_value = new JLabel();
-        distance_value.setFont(new Font("Serif", Font.BOLD, 20));
-        distance_value.setForeground(Color.RED);
-        distance_value.setText("-- km");
-        distance_value.setSize(100, 50);
-        warning.add(distance_value);
 
         JLabel vehicleSpeed = new JLabel("Vehicle Speed: ");
         vehicleSpeed.setForeground(Color.WHITE);
@@ -218,16 +206,25 @@ public class DisplayPanel extends JFrame {
         frame2.setVisible(true);
         System.out.println("\t\tTime \t SteerAngle \t LatAcceleration \t LongAcceleration \t\t\t GPS \t\t\t YawRate \t VehSpeed");
         CurveDetails curveDetails = new CurveDetails();
-        CurveDetails curveDetails1 = new CurveDetails();
         ArrayList<CurveDetails> curveList = new ArrayList<>();
 
         final boolean[] flag = {false};
-
+        boolean warningFlag = false;
         while (true) {
             start.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     flag[0] = true;
+                    latAcceleration_value.setText("--");
+                    longAcceleration_value.setText("--");
+                    gps_value.setText("--");
+                    time_value.setText("--");
+                    steerAngle_value.setText("--");
+                    yawRate_value.setText("--");
+                    vehicleSpeed_value.setText("--");
+                    curveDetection_value.setText("--");
+                    curvePosition_value.setText("--");
+                    avgSpeed_value.setText("--");
                     System.out.print("\r");
                 }
             });
@@ -235,54 +232,53 @@ public class DisplayPanel extends JFrame {
             if (flag[0]) {
 
                 double steeringAngle = 0;
-                double yawRate2 = 0.00;
                 double speed = 0;
                 String direction = "";
                 String position = "";
                 boolean flag1 = true;
                 double lowSpeed = 0.00;
                 double highSpeed = 0.00;
+                int index = 0;
 
                 for (CarAttributes attribute : attributesArrayList) {
 
                     switch (attribute.getSensorName()) {
                         case "lateral acceleration(metres/s^2)" -> {
-                            latAcceleration_value.setText(attribute.getValue() + "m/s²");
-                            time_value.setText(Double.toString(attribute.getTimeOffset()));
-                            latAccelerationConsole = attribute.getValue() + "m/s²";
+                            latAcceleration_value.setText(attribute.getValue() + " m/s²");
+                            time_value.setText(attribute.getTimeOffset() + " ms");
+                            latAccelerationConsole = attribute.getValue() + " m/s²";
                             timeValue = Double.toString(attribute.getTimeOffset());
                         }
                         case "Longitudinal acceleration(metres/s^2)" -> {
-                            longAcceleration_value.setText(attribute.getValue() + "m/s²");
-                            time_value.setText(Double.toString(attribute.getTimeOffset()));
-                            longitudinalAcceleration = attribute.getValue() + "m/s²";
+                            longAcceleration_value.setText(attribute.getValue() + " m/s²");
+                            time_value.setText(attribute.getTimeOffset() + " ms");
+                            longitudinalAcceleration = attribute.getValue() + " m/s²";
                             timeValue = Double.toString(attribute.getTimeOffset());
                         }
                         case "GPS(degrees)" -> {
-                            gps_value.setText(attribute.getValue() + "m/s²");
-                            time_value.setText(Double.toString(attribute.getTimeOffset()));
-                            gpsValues = attribute.getValue() + "m/s²";
+                            gps_value.setText(attribute.getValue());
+                            time_value.setText(attribute.getTimeOffset() + " ms");
+                            gpsValues = attribute.getValue();
                             position = attribute.getValue();
                             timeValue = Double.toString(attribute.getTimeOffset());
                         }
                         case "Yaw rate(degrees/second)" -> {
-                            yawRate_value.setText(attribute.getValue() + "°/s");
-                            time_value.setText(Double.toString(attribute.getTimeOffset()));
-                            yawRateConsole = attribute.getValue() + "°/s";
-                            yawRate2 = Double.parseDouble(attribute.getValue());
+                            yawRate_value.setText(attribute.getValue() + " °/s");
+                            time_value.setText(attribute.getTimeOffset() + " ms");
+                            yawRateConsole = attribute.getValue() + " °/s";
                             timeValue = Double.toString(attribute.getTimeOffset());
                         }
                         case "Steering wheel angle(degrees)" -> {
-                            steerAngle_value.setText(attribute.getValue() + "°");
+                            steerAngle_value.setText(attribute.getValue() + " °");
                             steeringAngle = Double.parseDouble(attribute.getValue());
-                            time_value.setText(Double.toString(attribute.getTimeOffset()));
-                            steerAngleConsole = attribute.getValue() + "°";
+                            time_value.setText(attribute.getTimeOffset() + " ms");
+                            steerAngleConsole = attribute.getValue() + " °";
                             timeValue = Double.toString(attribute.getTimeOffset());
                         }
                         case "Vehicle Speed(km/h)" -> {
-                            vehicleSpeed_value.setText(attribute.getValue() + "km/h");
-                            time_value.setText(Double.toString(attribute.getTimeOffset()));
-                            vehicleSpeedConsole = attribute.getValue() + "km/h";
+                            vehicleSpeed_value.setText(attribute.getValue() + " km/h");
+                            time_value.setText(attribute.getTimeOffset() + " ms");
+                            vehicleSpeedConsole = attribute.getValue() + " km/h";
                             speed = Double.parseDouble(attribute.getValue());
                             timeValue = Double.toString(attribute.getTimeOffset());
                         }
@@ -293,39 +289,54 @@ public class DisplayPanel extends JFrame {
                         interruptedException.printStackTrace();
                     }
 
-                    curveDetails.speedWarning = "Low speed";
-                    if (abs(steeringAngle) > 10) {
-                        if (steeringAngle < 0) curveDetails.direction = "Left Curve";
-                        if (steeringAngle > 0) curveDetails.direction = "Right Curve";
+                    curveDetails.setSpeedWarning("Low speed");
+                    if (abs(steeringAngle) > 15) {
+                        if (steeringAngle < 0) direction = "Left Curve";
+                        if (steeringAngle > 0) direction = "Right Curve";
                         if (flag1) {
-                            curveDetails.startPoint = position;
-                            curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
+                            curveDetails.setDirection(direction);
+                            curveDetails.setStartPoint(position);
+                            curveDetails.setTimeOffset(Double.parseDouble(timeValue));
+                            curvePosition_value.setText(curveDetails.getStartPoint() + "  to   " + curveDetails.getEndPoint());
                             flag1 = false;
                         }
                         lowSpeed = Math.min(lowSpeed, speed);
                         highSpeed = Math.max(highSpeed, speed);
-                        if (speed < 50) curveDetails.speedWarning = "Low Speed";
-                        if (speed > 50) curveDetails.speedWarning = "High Speed";
+                        if (speed < 50) curveDetails.setSpeedWarning("Low Speed");
+                        if (speed > 50) curveDetails.setSpeedWarning("High Speed");
+                        curveDetection_value.setText(curveDetails.getDirection() + " with " + curveDetails.getSpeedWarning());
                     } else {
-                        if (curveDetails.startPoint != null && !flag1) {
-                            curveDetails.endPoint = position;
-                            curveDetails.avgSpeed = (lowSpeed + highSpeed)/2;
-                            avgSpeed_value.setText((curveDetails.avgSpeed) + " km/h");
-                            curveList.add(curveDetails);
-                            curvePosition_value.setText(curveDetails.startPoint + "  to   " + curveDetails.endPoint);
-                            curveDetails.startPoint = null;
+                        if (curveDetails.getStartPoint() != null && !flag1) {
+                            curveDetails.setEndPoint(position);
+                            curveDetails.setAvgSpeed((lowSpeed + highSpeed) / 2);
+                            avgSpeed_value.setText((curveDetails.getAvgSpeed()) + " km/h");
+                            if (!warningFlag) curveList.add(curveDetails);
+                            curvePosition_value.setText(curveDetails.getStartPoint() + "  to   " + curveDetails.getEndPoint());
+                            curveDetails = new CurveDetails();
+                            curveDetails.setStartPoint(null);
+                            curveDetails.setDirection("No curve");
+                            flag1 = true;
                         }
-                        curveDetails.direction = "No curve";
-                        flag1 = true;
+
                     }
 
-                    curveDetection_value.setText(curveDetails.direction + " with " + curveDetails.speedWarning);
                     System.out.format("\r\t\t%s\t%10s\t\t%10s\t\t%20s\t%20s\t%10s\t\t%5s", timeValue, steerAngleConsole, latAccelerationConsole, longitudinalAcceleration, gpsValues, yawRateConsole, vehicleSpeedConsole);
                     flag[0] = false;
+
+                    if (curveList.size() == 3 && warningFlag) {
+
+                        if (Double.parseDouble(timeValue) - curveList.get(index).getTimeOffset() == 0.0 && index < 2)
+                            index++;
+                        if (Double.parseDouble(timeValue) <= curveList.get(index).getTimeOffset()) {
+                            warningMsg_value.setText(curveList.get(index).getDirection() + " in " + abs((Double.parseDouble(timeValue) - curveList.get(index).getTimeOffset()) / 1000) + " s");
+                            warningAvgSpeed_value.setText(curveList.get(index).getAvgSpeed().toString() + " km/h");
+                        }
+                    }
                 }
 
-                System.out.println();
-                System.out.println(curveList.size());
+                warningFlag = true;
+
+
             }
 
         }

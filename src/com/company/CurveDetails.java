@@ -3,11 +3,11 @@ package com.company;
 public class CurveDetails {
 
     public double timeOffset;
-    public String startPoint;
-    public String endPoint;
-    public String direction;
-    public String speedWarning;
-    public Double avgSpeed;
+    public String startPoint = "--";
+    public String endPoint = "--";
+    public String direction = "--";
+    public String speedWarning = "--";
+    public Double avgSpeed = 0.00;
 
     public double getTimeOffset() {
         return timeOffset;
