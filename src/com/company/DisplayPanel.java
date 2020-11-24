@@ -11,10 +11,16 @@ import static java.lang.StrictMath.abs;
 
 public class DisplayPanel extends JFrame {
 
+    /**
+     * Function to create GUI frame and update values
+     *
+     * @param attributesArrayList
+     */
     public void display(ArrayList<CarAttributes> attributesArrayList) {
         setSize(1000, 1000);
         setVisible(false);
 
+        //Setup of GUI Frame and Panel
         JFrame frame2 = new JFrame("NAVIGATION SYSTEM");
         frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -199,18 +205,25 @@ public class DisplayPanel extends JFrame {
         dashboard.add(warning);
         dashboard.add(curve);
         dashboard.add(sensors);
+
+        //Adding panels to GUI frame
         frame2.add(frame1, BorderLayout.NORTH);
         frame2.add(time, BorderLayout.SOUTH);
         frame2.add(dashboard, BorderLayout.CENTER);
         frame2.setSize(1000, 500);
         frame2.setVisible(true);
+
         System.out.println("\t\tTime \t SteerAngle \t LatAcceleration \t LongAcceleration \t\t\t GPS \t\t\t YawRate \t VehSpeed");
+
+        //Initializing object to store curve details and a list to store each curve
         CurveDetails curveDetails = new CurveDetails();
         ArrayList<CurveDetails> curveList = new ArrayList<>();
 
         final boolean[] flag = {false};
         boolean warningFlag = false;
         while (true) {
+
+            //Start button ActionListener with initialization of UI fields
             start.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -231,6 +244,7 @@ public class DisplayPanel extends JFrame {
 
             if (flag[0]) {
 
+                //initialization of variables required for getting sensor details
                 double steeringAngle = 0;
                 double speed = 0;
                 String direction = "";
@@ -240,8 +254,10 @@ public class DisplayPanel extends JFrame {
                 double highSpeed = 0.00;
                 int index = 0;
 
+                // Loop to update the window with details of sensor and detected curves
                 for (CarAttributes attribute : attributesArrayList) {
 
+                    // Printing sensor data on GUI frame (Part 2)
                     switch (attribute.getSensorName()) {
                         case "lateral acceleration(metres/s^2)" -> {
                             latAcceleration_value.setText(attribute.getValue() + " m/s²");
@@ -289,6 +305,7 @@ public class DisplayPanel extends JFrame {
                         interruptedException.printStackTrace();
                     }
 
+                    //Curve Detection (Part 3)
                     curveDetails.setSpeedWarning("Low speed");
                     if (abs(steeringAngle) > 15) {
                         if (steeringAngle < 0) direction = "Left Curve";
@@ -320,9 +337,11 @@ public class DisplayPanel extends JFrame {
 
                     }
 
+                    //Printing Output in console (Part 1)
                     System.out.format("\r\t\t%s\t%10s\t\t%10s\t\t%20s\t%20s\t%10s\t\t%5s", timeValue, steerAngleConsole, latAccelerationConsole, longitudinalAcceleration, gpsValues, yawRateConsole, vehicleSpeedConsole);
                     flag[0] = false;
 
+                    //Curve Warning (Part 4)
                     if (curveList.size() == 3 && warningFlag) {
 
                         if (Double.parseDouble(timeValue) - curveList.get(index).getTimeOffset() == 0.0 && index < 2)
@@ -333,12 +352,8 @@ public class DisplayPanel extends JFrame {
                         }
                     }
                 }
-
                 warningFlag = true;
-
-
             }
-
         }
     }
 }

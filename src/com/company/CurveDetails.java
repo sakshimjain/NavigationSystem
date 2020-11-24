@@ -1,5 +1,9 @@
 package com.company;
 
+/**
+ * Definitions attributes and measurements of curve with respective getter and setter
+ */
+
 public class CurveDetails {
 
     public double timeOffset;
