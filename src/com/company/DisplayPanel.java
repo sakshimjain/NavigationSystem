@@ -243,7 +243,9 @@ public class DisplayPanel extends JFrame {
                     }
 
                     curveDetection_value.setText(curveDetails.direction + " with " + curveDetails.speedWarning);
-
+//                    Double ratio = Double.parseDouble(vehicleSpeedConsole) / Double.parseDouble(yawRateConsole);
+//                    String ratio_console = Double.toString(ratio);
+//                    System.out.println(timeValue + " " + steerAngleConsole + " " + latAccelerationConsole + " " + longitudinalAcceleration + " " + gpsValues + " " + yawRateConsole + " " + vehicleSpeedConsole + " " + ratio_console);
                     System.out.format("\r\t\t%s\t%10s\t\t%10s\t\t%20s\t%20s\t%10s\t\t%5s", timeValue, steerAngleConsole, latAccelerationConsole, longitudinalAcceleration, gpsValues, yawRateConsole, vehicleSpeedConsole);
                     flag[0] = false;
                 }

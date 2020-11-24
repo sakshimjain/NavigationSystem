@@ -71,8 +71,10 @@ public class DecodeValue {
     private static double calculateValuesForSteeringWheelAngle(String binaryCanData) {
         //0003; By1Bi5-By2Bi0; 14 bit; Steering wheel angle; 3FFFh;  -2048 - +2047°;  0 - 8190; 0,5 °
 
-        String relevantBinaryString = binaryCanData.substring(2, 16);
-        int integerValue = Integer.parseInt(relevantBinaryString, 2);
+        int integerValue = (((Character.digit(binaryCanData.charAt(0),16) & ((1<<2)-1))<<12) |
+                (Character.digit(binaryCanData.charAt(1),16)<<8) |
+                (Character.digit(binaryCanData.charAt(2),16)<<4) |
+                (Character.digit(binaryCanData.charAt(3),16)));
 
         return integerValue * 0.5 - 2048;
     }
@@ -114,7 +116,7 @@ public class DecodeValue {
 
             //decoding value for Steering Wheel
             if (attribute.getFrameID().equals("0003")) {
-                double value = calculateValuesForSteeringWheelAngle(binaryCanData);
+                double value = calculateValuesForSteeringWheelAngle(canData);
                 attribute.setValue(String.valueOf(df.format(value)));
 
             }

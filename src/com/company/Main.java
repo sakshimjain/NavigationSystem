@@ -65,9 +65,8 @@ public class Main {
                     carAttribute.setSensorName("Steering wheel angle(degrees)");
                     carAttribute.setFrameID("0003");
                     StringBuilder data = new StringBuilder();
-                    for (int i = 6; i < tokens.length; i++) {
-                        data.append(tokens[i]);
-                    }
+                    String sAngle = tokens[6] + tokens[7];
+                    data.append(sAngle);
                     carAttribute.setData(data.toString());
                     attributeCollection.add(carAttribute);
                 }
