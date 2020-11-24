@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,11 @@ public class DisplayPanel extends JFrame {
 
         JPanel frame1 = new JPanel();
         JPanel time = new JPanel();
-        JPanel sensors = new JPanel(new GridLayout(4, 2, 2, 2));
+        JPanel dashboard = new JPanel( new FlowLayout(FlowLayout.CENTER, 0, 0) );
+        JPanel curve = new JPanel(new GridLayout(1, 2, 2, 2));
+        JPanel sensors = new JPanel(new GridLayout(3, 2, 2, 2));
+        curve.setPreferredSize( new Dimension(700, 100) );
+        sensors.setPreferredSize( new Dimension(700, 290) );
 
         JButton start = new JButton("Start");
         frame1.add(start);
@@ -42,26 +47,26 @@ public class DisplayPanel extends JFrame {
 
         JLabel curveDetection = new JLabel("Curve Detection: ");
         curveDetection.setForeground(Color.WHITE);
-        sensors.add(curveDetection);
+        curve.add(curveDetection);
         curveDetection.setSize(100, 50);
         JLabel curveDetection_value = new JLabel();
         curveDetection_value.setForeground(Color.WHITE);
         curveDetection_value.setText("No curve");
-        sensors.add(curveDetection_value);
+        curve.add(curveDetection_value);
 
         JLabel curvePosition = new JLabel("Curve Position: ");
         curvePosition.setForeground(Color.WHITE);
-        sensors.add(curvePosition);
+        curve.add(curvePosition);
         curvePosition.setSize(100, 50);
         JLabel curvePosition_value = new JLabel();
         curvePosition_value.setForeground(Color.WHITE);
         curvePosition_value.setText("0");
-        sensors.add(curvePosition_value);
+        curve.add(curvePosition_value);
 
         JLabel vehicleSpeed = new JLabel("Vehicle Speed: ");
         vehicleSpeed.setForeground(Color.WHITE);
         sensors.add(vehicleSpeed);
-        vehicleSpeed.setSize(100, 50);
+        vehicleSpeed.setSize(80, 50);
         JLabel vehicleSpeed_value = new JLabel();
         vehicleSpeed_value.setForeground(Color.WHITE);
         vehicleSpeed_value.setText("-- mph");
@@ -71,7 +76,7 @@ public class DisplayPanel extends JFrame {
         JLabel steerAngle = new JLabel("Steering Angle: ");
         steerAngle.setForeground(Color.WHITE);
         sensors.add(steerAngle);
-        steerAngle.setSize(100, 50);
+        steerAngle.setSize(80, 50);
         JLabel steerAngle_value = new JLabel();
         steerAngle_value.setForeground(Color.WHITE);
         steerAngle_value.setText("0°");
@@ -81,7 +86,7 @@ public class DisplayPanel extends JFrame {
         JLabel yawRate = new JLabel("Yaw Rate: ");
         yawRate.setForeground(Color.WHITE);
         sensors.add(yawRate);
-        yawRate.setSize(100, 50);
+        yawRate.setSize(80, 50);
         JLabel yawRate_value = new JLabel();
         yawRate_value.setForeground(Color.WHITE);
         yawRate_value.setText("0 °/s");
@@ -91,9 +96,10 @@ public class DisplayPanel extends JFrame {
         JLabel latAcceleration = new JLabel("Lateral Acceleration: ");
         latAcceleration.setForeground(Color.WHITE);
         sensors.add(latAcceleration);
-        latAcceleration.setSize(100, 50);
+        latAcceleration.setSize(80, 50);
         JLabel latAcceleration_value = new JLabel();
         latAcceleration_value.setForeground(Color.WHITE);
+        latAcceleration_value.setSize(80, 50);
         latAcceleration_value.setText("0 m/s²");
         String latAccelerationConsole = "-- mph";
         sensors.add(latAcceleration_value);
@@ -101,9 +107,10 @@ public class DisplayPanel extends JFrame {
         JLabel longAcceleration = new JLabel("Longitudinal Acceleration: ");
         longAcceleration.setForeground(Color.WHITE);
         sensors.add(longAcceleration);
-        longAcceleration.setSize(100, 50);
+        longAcceleration.setSize(80, 50);
         JLabel longAcceleration_value = new JLabel();
         longAcceleration_value.setForeground(Color.WHITE);
+        longAcceleration_value.setSize(80, 50);
         longAcceleration_value.setText("0 m/s²");
         String longitudinalAcceleration = "-- mph";
         sensors.add(longAcceleration_value);
@@ -111,18 +118,35 @@ public class DisplayPanel extends JFrame {
         JLabel gps = new JLabel("GPS Coordinates: ");
         gps.setForeground(Color.WHITE);
         sensors.add(gps);
-        gps.setSize(100, 50);
+        gps.setSize(80, 50);
         JLabel gps_value = new JLabel();
         gps_value.setForeground(Color.WHITE);
+        gps_value.setSize(80, 50);
         gps_value.setText("0");
         String gpsValues = "-- mph";
         sensors.add(gps_value);
 
         sensors.setBackground(Color.BLACK);
+        sensors.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(
+                                EtchedBorder.RAISED, Color.GRAY
+                                , Color.DARK_GRAY), "Sensor Data"));
+        ((javax.swing.border.TitledBorder)sensors.getBorder()).setTitleColor(Color.WHITE);
 
+        curve.setBackground(Color.BLACK);
+        curve.setBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(
+                                EtchedBorder.RAISED, Color.GRAY
+                                , Color.DARK_GRAY), "Curve"));
+        ((javax.swing.border.TitledBorder)curve.getBorder()).setTitleColor(Color.WHITE);
+
+        dashboard.add(curve, BorderLayout.NORTH);
+        dashboard.add(sensors, BorderLayout.SOUTH);
         frame2.add(frame1, BorderLayout.NORTH);
         frame2.add(time, BorderLayout.SOUTH);
-        frame2.add(sensors, BorderLayout.CENTER);
+        frame2.add(dashboard, BorderLayout.CENTER);
         frame2.setSize(700, 500);
         frame2.setVisible(true);
         System.out.println("\t\tTime \t SteerAngle \t LatAcceleration \t LongAcceleration \t\t\t GPS \t\t\t YawRate \t VehSpeed");
